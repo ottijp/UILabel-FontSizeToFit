@@ -14,7 +14,7 @@ extension UILabel {
         self.fontSizeToFit(minimumFontScale: 0.2, diminishRate: 0.5)
     }
     
-    func fontSizeToFit(minimumFontScale minimumFontScale: CGFloat, diminishRate: CGFloat) {
+    func fontSizeToFit(minimumFontScale: CGFloat, diminishRate: CGFloat) {
         let text = self.text!
         if (text.characters.count == 0) {
             return
@@ -25,13 +25,13 @@ extension UILabel {
         let minimumFontSize = fontSize * minimumFontScale
         let isOneLine = (self.numberOfLines == 1)
         
-        var boundingSize = CGSizeZero
-        var area = CGSizeZero
+        var boundingSize = CGSize.zero
+        var area = CGSize.zero
         var font = UIFont()
         var fs = fontSize
         var newAttributes = [String : AnyObject]()
-        self.attributedText?.enumerateAttributesInRange(NSMakeRange(0, text.characters.count), options: .LongestEffectiveRangeNotRequired, usingBlock: { (attributes: [String : AnyObject], range: NSRange, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
-            newAttributes = attributes
+        self.attributedText?.enumerateAttributes(in: NSMakeRange(0, text.characters.count), options: .longestEffectiveRangeNotRequired, using: { (attributes: [String : Any], range: NSRange, stop: UnsafeMutablePointer<ObjCBool>) -> Void in
+            newAttributes = attributes as [String : AnyObject]
         })
         if newAttributes.count == 0 {
             return
@@ -41,12 +41,12 @@ extension UILabel {
             newAttributes[NSFontAttributeName] = font
             
             if isOneLine {
-                boundingSize = CGSize(width: CGFloat.max, height: size.height)
+                boundingSize = CGSize(width: CGFloat.greatestFiniteMagnitude, height: size.height)
             }
             else {
-                boundingSize = CGSize(width: size.width, height: CGFloat.max)
+                boundingSize = CGSize(width: size.width, height: CGFloat.greatestFiniteMagnitude)
             }
-            area = NSString(string: text).boundingRectWithSize(boundingSize, options: .UsesLineFragmentOrigin, attributes: newAttributes, context: nil).size
+            area = NSString(string: text).boundingRect(with: boundingSize, options: .usesLineFragmentOrigin, attributes: newAttributes, context: nil).size
             if isOneLine {
                 if area.width <= size.width {
                     break;

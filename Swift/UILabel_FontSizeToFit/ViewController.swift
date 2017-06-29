@@ -20,21 +20,21 @@ class ViewController: UIViewController {
         
         // Setup UILabel
         self.label.numberOfLines = 0
-        self.label.frame = CGRectMake(0, 0, 300, 100)
+        self.label.frame = CGRect(x: 0, y: 0, width: 300, height: 100)
         self.label.text = self.words[0]
-        self.label.textAlignment = .Center
-        self.label.font = UIFont.systemFontOfSize(50.0)
-        self.label.textColor = UIColor.whiteColor()
-        self.label.lineBreakMode = .ByWordWrapping
+        self.label.textAlignment = .center
+        self.label.font = UIFont.systemFont(ofSize: 50.0)
+        self.label.textColor = UIColor.white
+        self.label.lineBreakMode = .byWordWrapping
         self.label.layer.borderWidth = 2.0
-        self.label.layer.borderColor = UIColor.redColor().CGColor
+        self.label.layer.borderColor = UIColor.red.cgColor
         self.label.layer.cornerRadius = 3.0
         self.view.addSubview(self.label)
         self.label.center = self.view.center
         
         // Start Demo Loop
-        let timer = NSTimer.scheduledTimerWithTimeInterval(0.7, target: self, selector: "addWord1", userInfo: nil, repeats: true);
-        NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSRunLoopCommonModes)
+        let timer = Timer.scheduledTimer(timeInterval: 0.7, target: self, selector: #selector(ViewController.addWord1), userInfo: nil, repeats: true);
+        RunLoop.main.add(timer, forMode: RunLoopMode.commonModes)
     }
     
     func addWord1() {
